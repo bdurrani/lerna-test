@@ -11,6 +11,8 @@ detectChangedPackages() {
     set -e
 }
 
+detectChangedPackages
+
 if [[ "${CHANGED_PACKAGES}" == "" ]]; then
     echo "Could not determine which packages have changed"; exit 1
 fi
