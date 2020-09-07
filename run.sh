@@ -11,6 +11,8 @@ detectChangedPackages() {
     set -e
 }
 
+git pull origin --no-edit
+
 detectChangedPackages
 
 if [[ "${CHANGED_PACKAGES}" == "" ]]; then
@@ -29,7 +31,18 @@ git pull origin --no-edit
 # git fetch origin
 # git merge develop -m "Merging changes"
 
-echo "Pushing to master"
+# merge to master
+echo "Merging develop to master"
+git checkout master
+git pull origin master
+git merge develop
+
+# push to master
+echo "Pushing master"
 git push origin master --tags
+
+# switch back to develop
+git checkout develop
+git push origin develop --tags
 
 npx lerna publish from-package --yes
