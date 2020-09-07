@@ -3,7 +3,7 @@ set -euo pipefail
 
 npx lerna version patch --yes --no-push
 readonly HEAD_SHA=$(git rev-parse --short HEAD)
-git tag "tag-${HEAD_SHA}"
+# git tag "tag-${HEAD_SHA}"
 
 echo "Local change made. Wait for remote change"
 read year
