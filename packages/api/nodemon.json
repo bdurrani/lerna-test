@@ -1,0 +1,6 @@
+{
+  "verbose": false,
+  "ext": "ejs, js, json",
+  "delay": 2000,
+  "exec": "node index.js"
+}
