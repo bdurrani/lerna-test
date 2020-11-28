@@ -1,6 +1,6 @@
 {
   "name": "runner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This is a runner",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "license": "ISC",
   "private": true,
   "dependencies": {
-    "@bdurrani/package-b": "0.0.6"
+    "@bdurrani/package-b": "^0.0.7"
   },
   "devDependencies": {
     "nodemon": "2.0.6"
