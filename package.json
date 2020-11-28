@@ -3,5 +3,10 @@
   "private": true,
   "devDependencies": {
     "lerna": "3.22.1"
+  },
+  "scripts": {
+    "start:update-service": "lerna run start --scope update-service --stream",
+    "start:api": "lerna run start --scope api --stream",
+    "start:runner": "lerna run start --scope runner --stream"
   }
 }
