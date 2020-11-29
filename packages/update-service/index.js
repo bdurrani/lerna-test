@@ -6,6 +6,11 @@ const app = express();
 const port = 3001;
 const branch = "master";
 const git = simpleGit();
+const REPO = "https://github.com/bdurrani/lerna-test.git";
+
+(async () => {
+  await git.clone(REPO, "");
+})();
 
 app.get("/", async (_req, res) => {
   try {
