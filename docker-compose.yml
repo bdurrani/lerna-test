@@ -1,19 +1,19 @@
 version: "3.8"
 services:
   update-service:
-    build: ./packages/update-service
+    image: update-service:latest
     ports:
       - "3001:3001"
-    environment:
-      - APP_DIR=/app
+    env_file:
+      - ./packages/update-service/.env
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3001"]
       interval: 30s
       timeout: 10s
       retries: 5
 
-  runner-service:
-    build: ./packages/runner
-    restart: on-failure
-    depends_on:
-      - update-service
+  # runner-service:
+  #   build: ./packages/runner
+  #   restart: on-failure
+  #   depends_on:
+  #     - update-service

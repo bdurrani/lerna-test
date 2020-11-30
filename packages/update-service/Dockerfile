@@ -14,5 +14,9 @@ RUN apt-get update \
   && mkdir /update-service
 
 VOLUME /app
+WORKDIR /update-service
+EXPOSE 3001
 
 COPY --from=modules /update-service/node_modules /update-service/node_modules 
+COPY  . /update-service
+CMD ["node", "index.js"]
