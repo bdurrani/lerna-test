@@ -28,9 +28,6 @@ function bootstrap(folder) {
   execSync("npm ci && npx lerna bootstrap", {
     cwd: folder,
   });
-  // execSync("npx lerna bootstrap", {
-  //   cwd: folder,
-  // });
 }
 
 (async () => {
