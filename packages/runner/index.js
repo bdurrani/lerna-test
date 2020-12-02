@@ -4,7 +4,7 @@ const runnerPackage = require("./package.json");
 const packageB = require("@bdurrani/package-b");
 
 setInterval(() => {
-  console.log(`Running job. Version ${runnerPackage.version}`);
+  console.log(`Running job111. Version ${runnerPackage.version}`);
   packageB();
 }, intervalMs);
 
