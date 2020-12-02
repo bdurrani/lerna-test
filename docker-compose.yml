@@ -17,6 +17,13 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+  runner-service:
+    image: runner-service:latest
+    volumes:
+      - repo-volume:/app:ro
+    restart: always
+    depends_on:
+      - update-service
 
   # runner-service:
   #   build: ./packages/runner

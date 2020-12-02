@@ -2,6 +2,7 @@ const express = require("express");
 const gitServicePackage = require("./package.json");
 const simpleGit = require("simple-git");
 const { execSync } = require("child_process");
+const { SIGTERM, SIGINT } = require("constants");
 require("dotenv").config();
 
 const { TOKEN, USERNAME, TARGET_DIR } = process.env;
@@ -23,10 +24,20 @@ function isGitRepo(folder) {
   }
 }
 
+function bootstrap(folder) {
+  execSync("npm ci && npx lerna bootstrap", {
+    cwd: folder,
+  });
+  // execSync("npx lerna bootstrap", {
+  //   cwd: folder,
+  // });
+}
+
 (async () => {
   if (!isGitRepo(TARGET_DIR)) {
     console.log(`cloning to target dir ${TARGET_DIR}`);
     await git.clone(REPO, TARGET_DIR);
+    bootstrap(TARGET_DIR);
   } else {
     console.log(`${TARGET_DIR} is already a git report`);
   }
@@ -38,6 +49,7 @@ function isGitRepo(folder) {
         "--no-rebase": null,
       });
       const status = await git.status();
+      bootstrap(TARGET_DIR);
       res.send(status);
     } catch (error) {
       res.status(500);
@@ -46,9 +58,23 @@ function isGitRepo(folder) {
     }
   });
 
-  app.listen(port, () => {
+  const server = app.listen(port, () => {
     console.log(
       `api v. ${gitServicePackage.version} listening at http://localhost:${port}`
     );
+  });
+
+  const shutdown = () => {
+    server.close(() => {
+      console.log("shutting down updater service");
+      process.exit(0);
+    });
+  };
+
+  process.on(SIGTERM, () => {
+    shutdown();
+  });
+  process.on(SIGINT, () => {
+    shutdown();
   });
 })();
