@@ -2,17 +2,17 @@ const express = require("express");
 const gitServicePackage = require("./package.json");
 const simpleGit = require("simple-git");
 const { execSync } = require("child_process");
-const { SIGTERM, SIGINT } = require("constants");
 require("dotenv").config();
 
-const { TOKEN, USERNAME, TARGET_DIR } = process.env;
+const { TOKEN, USERNAME, TARGET_DIR, CURRENT_BRANCH } = process.env;
+const BRANCH = CURRENT_BRANCH || "develop";
+const PORT = 3001;
 
 const app = express();
-const port = 3001;
-const branch = "master";
 const git = simpleGit({
   baseDir: TARGET_DIR,
 });
+
 const REPO = `https://${USERNAME}:${TOKEN}@github.com/bdurrani/lerna-test.git`;
 
 function isGitRepo(folder) {
@@ -42,7 +42,7 @@ function bootstrap(folder) {
   app.get("/", async (_req, res) => {
     try {
       console.log("updating repo");
-      await git.pull("origin", branch, {
+      await git.pull("origin", BRANCH, {
         "--no-rebase": null,
       });
       const status = await git.status();
@@ -55,9 +55,9 @@ function bootstrap(folder) {
     }
   });
 
-  const server = app.listen(port, () => {
+  const server = app.listen(PORT, () => {
     console.log(
-      `api v. ${gitServicePackage.version} listening at http://localhost:${port}`
+      `api v. ${gitServicePackage.version} listening at http://localhost:${PORT}`
     );
   });
 
@@ -68,10 +68,10 @@ function bootstrap(folder) {
     });
   };
 
-  process.on(SIGTERM, () => {
+  process.on("SIGTERM", () => {
     shutdown();
   });
-  process.on(SIGINT, () => {
+  process.on("SIGINT", () => {
     shutdown();
   });
 })();
