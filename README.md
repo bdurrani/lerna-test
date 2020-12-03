@@ -3,3 +3,5 @@
 
  ### Update version
   npx lerna version patch --yes --no-push
+  
+A change
