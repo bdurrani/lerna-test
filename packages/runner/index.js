@@ -6,7 +6,7 @@ let count = 0;
 console.log("starting runner");
 
 setInterval(() => {
-  console.log(`Running job22. Version ${runnerPackage.version}`);
+  console.log(`Running job2. Version ${runnerPackage.version}`);
   packageB();
   count++;
   if (count >= 4) {
@@ -15,7 +15,7 @@ setInterval(() => {
   }
 }, intervalMs);
 
-process.once("SIGUSR2", () => {
-  console.log("nodemon restart");
-  process.exit(0);
-});
+// process.once("SIGUSR2", () => {
+//   console.log("nodemon restart");
+//   process.exit(0);
+// });
