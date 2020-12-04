@@ -6,7 +6,7 @@ let count = 0;
 console.log("starting runner");
 
 setInterval(() => {
-  console.log(`Running job666. Version ${runnerPackage.version}`);
+  console.log(`Running job6661. Version ${runnerPackage.version}`);
   packageB();
   count++;
   if (count >= 6) {
