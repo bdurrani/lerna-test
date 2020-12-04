@@ -15,7 +15,7 @@ function delay(ms) {
 }
 
 app.get("/", async (_req, res) => {
-  const message = `Hello world v. ${apiPackage.version}`;
+  const message = `Hello world 1 v. ${apiPackage.version}`;
   await delay(5000);
   res.send(message);
   console.log(`sent: ${message}`);
@@ -23,7 +23,7 @@ app.get("/", async (_req, res) => {
 
 const server = app.listen(port, () => {
   console.log(
-    `api 1 v. ${apiPackage.version} listening at http://localhost:${port}`
+    `api v. ${apiPackage.version} listening at http://localhost:${port}`
   );
 });
 
