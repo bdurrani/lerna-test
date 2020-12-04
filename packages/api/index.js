@@ -16,7 +16,7 @@ function delay(ms) {
 
 app.get("/", async (_req, res) => {
   const message = `Hello world v. ${apiPackage.version}`;
-  await delay(3000);
+  await delay(5000);
   res.send(message);
   console.log(`sent: ${message}`);
 });
@@ -29,6 +29,7 @@ const server = app.listen(port, () => {
 
 process.once("SIGUSR2", function () {
   server.close(() => {
+    console.log("API GRACEFUL SHUTDOWN VIA NODEMON");
     process.kill(process.pid, "SIGUSR2");
   });
 });
