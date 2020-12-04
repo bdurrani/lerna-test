@@ -23,7 +23,7 @@ app.get("/", async (_req, res) => {
 
 const server = app.listen(port, () => {
   console.log(
-    `api v. ${apiPackage.version} listening at http://localhost:${port}`
+    `api 1 v. ${apiPackage.version} listening at http://localhost:${port}`
   );
 });
 
