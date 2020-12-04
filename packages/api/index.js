@@ -9,7 +9,8 @@ process.once("SIGUSR2", () => {
 });
 
 app.get("/", (_req, res) => {
-  res.send("Hello World!");
+  const message = `Hello world v. ${apiPackage.version}`;
+  res.send(message);
 });
 
 app.listen(port, () => {
