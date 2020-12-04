@@ -1,6 +1,7 @@
 FROM node:lts-buster-slim
 
 RUN apt-get update \
+  && apt-get install -y procps \
   && npm i -g lerna
 
 VOLUME /app
