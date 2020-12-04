@@ -14,6 +14,7 @@ setInterval(async () => {
   packageB();
   count++;
   try {
+    console.log(`connecting to ${api_host}`);
     const { data } = await axios.get(api_host);
     console.log(`response: ${data}`);
   } catch (error) {
