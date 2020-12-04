@@ -1,5 +1,5 @@
 "use strict";
-const intervalMs = 1000;
+const intervalMs = 2000;
 const runnerPackage = require("./package.json");
 const packageB = require("@bdurrani/package-b");
 let count = 0;
@@ -9,7 +9,7 @@ setInterval(() => {
   console.log(`Running job5. Version ${runnerPackage.version}`);
   packageB();
   count++;
-  if (count >= 4) {
+  if (count >= 6) {
     console.log("job done");
     process.exit(0);
   }
