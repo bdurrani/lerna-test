@@ -10,7 +10,7 @@ let count = 0;
 console.log("starting runner");
 
 setInterval(async () => {
-  console.log(`Running job6661. Version ${runnerPackage.version}`);
+  console.log(`Running jobXXXX. Version ${runnerPackage.version}`);
   packageB();
   count++;
   try {
