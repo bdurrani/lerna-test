@@ -2,6 +2,9 @@ version: "3.8"
 volumes:
   repo-volume:
 
+networks:
+  lerna-network:
+
 services:
   update-service:
     image: update-service:latest
@@ -12,6 +15,9 @@ services:
     env_file:
       - ./packages/update-service/.env
       - ./packages/update-service/docker.env
+    networks:
+      lerna-network:
+
     # healthcheck:
     #   test: ["CMD", "curl", "-f", "http://localhost:3001"]
     #   interval: 30s
@@ -22,8 +28,13 @@ services:
     volumes:
       - repo-volume:/app:ro
     restart: always
+    env_file:
+      - ./packages/runner/docker.env
     depends_on:
       - update-service
+    networks:
+      lerna-network:
+    # network_mode: host
 
   api-service:
     image: api:latest
@@ -34,3 +45,5 @@ services:
     restart: always
     depends_on:
       - update-service
+    networks:
+      lerna-network:

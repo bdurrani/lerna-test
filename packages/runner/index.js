@@ -18,7 +18,7 @@ setInterval(async () => {
     const { data } = await axios.get(api_host);
     console.log(`response: ${data}`);
   } catch (error) {
-    console.error(error);
+    console.error("cannot connect");
   }
   if (count >= 6) {
     console.log("job done");
