@@ -7,7 +7,9 @@ networks:
 
 services:
   update-service:
-    image: update-service:latest
+    # image: update-service:latest
+    image: ${ECR_URI}robot-update-service:latest
+
     ports:
       - "3001:3001"
     volumes:
@@ -24,7 +26,8 @@ services:
     #   timeout: 10s
     #   retries: 5
   runner-service:
-    image: runner-service:latest
+    # image: runner-service:latest
+    image: ${ECR_URI}robot-cr-runner-service:latest
     volumes:
       - repo-volume:/app:ro
     restart: always
@@ -37,7 +40,7 @@ services:
     # network_mode: host
 
   api-service:
-    image: api:latest
+    image: ${ECR_URI}robot-cr-api-service:latest
     volumes:
       - repo-volume:/app:ro
     ports:
