@@ -33,7 +33,7 @@ function bootstrap(folder) {
 (async () => {
   if (!isGitRepo(TARGET_DIR)) {
     console.log(`cloning to target dir ${TARGET_DIR}`);
-    await git.clone(REPO, TARGET_DIR);
+    await git.clone(REPO, TARGET_DIR, { "--depth": 1 });
     bootstrap(TARGET_DIR);
   } else {
     console.log(`${TARGET_DIR} is already a git report`);
