@@ -14,6 +14,7 @@ const git = simpleGit({
 });
 
 const REPO = `https://${USERNAME}:${TOKEN}@github.com/bdurrani/lerna-test.git`;
+let isReady = false;
 
 function isGitRepo(folder) {
   try {
@@ -47,11 +48,20 @@ function bootstrap(folder) {
       });
       const status = await git.status();
       bootstrap(TARGET_DIR);
+      isReady = true;
       res.send(status);
     } catch (error) {
       res.status(500);
       res.send(error);
       console.log(`error: ${JSON.stringify(error)}`);
+    }
+  });
+
+  app.get("/health", (_req, res) => {
+    if (isReady) {
+      res.status(200);
+    } else {
+      res.status(500);
     }
   });
 
