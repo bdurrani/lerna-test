@@ -8,13 +8,14 @@ const { TOKEN, USERNAME, TARGET_DIR, CURRENT_BRANCH } = process.env;
 const BRANCH = CURRENT_BRANCH || "develop";
 const PORT = 3001;
 
+console.log(`target dir: ${TARGET_DIR}`);
+
 const app = express();
 const git = simpleGit({
   baseDir: TARGET_DIR,
 });
 
 const REPO = `https://${USERNAME}:${TOKEN}@github.com/bdurrani/lerna-test.git`;
-let isReady = false;
 
 function isGitRepo(folder) {
   try {
@@ -32,6 +33,18 @@ function bootstrap(folder) {
 }
 
 (async () => {
+  let isReady = false;
+  app.get("/health", (_req, res) => {
+    console.log(`healthcheck isReady: ${isReady}`);
+
+    if (isReady) {
+      res.send("ok");
+    } else {
+      res.status(500).send();
+    }
+    console.log("all done");
+  });
+
   if (!isGitRepo(TARGET_DIR)) {
     console.log(`cloning to target dir ${TARGET_DIR}`);
     await git.clone(REPO, TARGET_DIR, { "--depth": 1 });
@@ -39,6 +52,7 @@ function bootstrap(folder) {
   } else {
     console.log(`${TARGET_DIR} is already a git report`);
   }
+  isReady = true;
 
   app.get("/", async (_req, res) => {
     try {
@@ -48,20 +62,11 @@ function bootstrap(folder) {
       });
       const status = await git.status();
       bootstrap(TARGET_DIR);
-      isReady = true;
       res.send(status);
     } catch (error) {
       res.status(500);
       res.send(error);
       console.log(`error: ${JSON.stringify(error)}`);
-    }
-  });
-
-  app.get("/health", (_req, res) => {
-    if (isReady) {
-      res.status(200);
-    } else {
-      res.status(500);
     }
   });
 
