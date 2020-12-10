@@ -50,7 +50,10 @@ function bootstrap(folder) {
     await git.clone(REPO, TARGET_DIR, { "--depth": 1 });
     bootstrap(TARGET_DIR);
   } else {
-    console.log(`${TARGET_DIR} is already a git report`);
+    console.log(`${TARGET_DIR} is already a git repo. Do git pull instead`);
+    await git.pull("origin", BRANCH, {
+      "--no-rebase": null,
+    });
   }
   isReady = true;
 
