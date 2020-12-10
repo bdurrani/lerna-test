@@ -10,7 +10,7 @@ function delay(ms) {
 }
 
 app.get("/", async (_req, res) => {
-  const message = `Hello world BRYAN WAS HERE. ${apiPackage.version}`;
+  const message = `Hello world NO-ONE WAS HERE. ${apiPackage.version}`;
   await delay(1000);
   res.send(message);
   console.log(`sent: ${message}`);
