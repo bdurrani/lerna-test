@@ -3,7 +3,7 @@
 const forever = require("forever-monitor");
 // const nodemon = require("nodemon");
 
-const MAX_RUN_COUNT = 5;
+const MAX_RUN_COUNT = process.env.MAX_RUN_COUNT || 5;
 
 // nodemon({
 //   script: "index.js",
