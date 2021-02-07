@@ -3,9 +3,9 @@ on:
     branches:
       - develop
     # Sequence of patterns matched against refs/tags
-    tags:
-      - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
-      - "@org/*" # Push events to matching v*, i.e. v1.0, v20.15.10
+    # tags:
+    #   - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
+    #   - "@org/*" # Push events to matching v*, i.e. v1.0, v20.15.10
 
 name: Create Release
 
@@ -13,10 +13,10 @@ jobs:
   hello_world_job:
     runs-on: ubuntu-latest
     name: A job to say hello
-    # if: contains(github.ref,'develop')
+    if: contains(github.ref,'@org')
     steps:
-      - name: Extract Branch Name
-        run: printenv
+      # - name: Extract Branch Name
+      #   run: printenv
       - name: Hello world action step
         id: hello
         uses: bdurrani/github-action@v1.1
