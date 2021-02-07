@@ -7,7 +7,7 @@ on:
     #   - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
     #   - "@org/*" # Push events to matching v*, i.e. v1.0, v20.15.10
 
-name: Create Release
+name: Create Release1
 
 jobs:
   hello_world_job:
