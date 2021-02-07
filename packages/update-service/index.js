@@ -8,6 +8,8 @@ const { TOKEN, USERNAME, TARGET_DIR, CURRENT_BRANCH } = process.env;
 const BRANCH = CURRENT_BRANCH || "develop";
 const PORT = 3001;
 
+console.log(`target dir: ${TARGET_DIR}`);
+
 const app = express();
 const git = simpleGit({
   baseDir: TARGET_DIR,
@@ -31,13 +33,29 @@ function bootstrap(folder) {
 }
 
 (async () => {
+  let isReady = false;
+  app.get("/health", (_req, res) => {
+    console.log(`healthcheck isReady: ${isReady}`);
+
+    if (isReady) {
+      res.send("ok");
+    } else {
+      res.status(500).send();
+    }
+    console.log("all done");
+  });
+
   if (!isGitRepo(TARGET_DIR)) {
     console.log(`cloning to target dir ${TARGET_DIR}`);
-    await git.clone(REPO, TARGET_DIR);
+    await git.clone(REPO, TARGET_DIR, { "--depth": 1 });
     bootstrap(TARGET_DIR);
   } else {
-    console.log(`${TARGET_DIR} is already a git report`);
+    console.log(`${TARGET_DIR} is already a git repo. Do git pull instead`);
+    await git.pull("origin", BRANCH, {
+      "--no-rebase": null,
+    });
   }
+  isReady = true;
 
   app.get("/", async (_req, res) => {
     try {

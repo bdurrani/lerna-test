@@ -10,7 +10,7 @@ let count = 0;
 console.log("starting runner");
 
 setInterval(async () => {
-  console.log(`Running job6661. Version ${runnerPackage.version}`);
+  console.log(`Running job-555. Version ${runnerPackage.version}`);
   packageB();
   count++;
   try {
@@ -18,7 +18,7 @@ setInterval(async () => {
     const { data } = await axios.get(api_host);
     console.log(`response: ${data}`);
   } catch (error) {
-    console.error(error);
+    console.error("cannot connect");
   }
   if (count >= 6) {
     console.log("job done");

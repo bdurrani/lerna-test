@@ -2,9 +2,19 @@ version: "3.8"
 volumes:
   repo-volume:
 
+networks:
+  lerna-network:
+
 services:
   update-service:
-    image: update-service:latest
+    # image: update-service:latest
+    image: ${ECR_URI}robot-update-service:latest
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      timeout: 45s
+      interval: 45s
+      retries: 10
+      start_period: 40s
     ports:
       - "3001:3001"
     volumes:
@@ -12,25 +22,33 @@ services:
     env_file:
       - ./packages/update-service/.env
       - ./packages/update-service/docker.env
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "http://localhost:3001"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 5
+    networks:
+      lerna-network:
+
   runner-service:
-    image: runner-service:latest
+    # image: runner-service:latest
+    image: ${ECR_URI}robot-cr-runner-service:latest
     volumes:
       - repo-volume:/app:ro
     restart: always
+    env_file:
+      - ./packages/runner/docker.env
     depends_on:
-      - update-service
+      update-service:
+        condition: service_healthy
+    networks:
+      lerna-network:
+    # network_mode: host
 
   api-service:
-    image: api:latest
+    image: ${ECR_URI}robot-cr-api-service:latest
     volumes:
       - repo-volume:/app:ro
     ports:
       - "3000:3000"
     restart: always
     depends_on:
-      - update-service
+      update-service:
+        condition: service_healthy
+    networks:
+      lerna-network:
