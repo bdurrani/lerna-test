@@ -19,7 +19,7 @@ jobs:
       #   run: printenv
       - name: Hello world action step
         id: hello
-        uses: bdurrani/github-action@v1.3
+        uses: bdurrani/github-action@v1.4
         with:
           who-to-greet: "Mona the Octocat"
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
